@@ -297,7 +297,7 @@
                     const ativo = Boolean(confirmados[chave]);
                     return (
                       <li key={chave}>
-                        <span>{nome}{m && typeof m === "object" && m.coroa && (<svg viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="Coroa" style="margin-left:.4rem;vertical-align:middle"><path fill="#C9A227" d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/></svg>)}</span>
+                        <span>{nome}{m && typeof m === "object" && m.coroa && (<svg viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="Coroa" style={{ marginLeft: ".4rem", verticalAlign: "middle" }}><path fill="#C9A227" d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/></svg>)}</span>
                         <button type="button" className="botao" aria-pressed={ativo}
                           onClick={() => alternar(chave, nome, f.membros.map(nomeDe).join(", "))}>
                           {ativo ? "Confirmado ✓" : "Confirmar presença"}
