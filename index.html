@@ -105,7 +105,7 @@
     ["Marilene", "Cláudio"],
     ["Felipe", "Ângela"],
     ["Bianca", "Marcelo"],
-    ["Eliane", "Carolina", "Cônjuge de Eliane"],
+    ["Eliane", "Carolina", "Jamil"],
     ["Cristiane", "Cristiano"],
     ["Eva"],
     ["Aldino", "Elacy"],
@@ -169,12 +169,22 @@
 
     const buscar = (e) => { e.preventDefault(); setBuscado(termo.trim()); };
 
-    const alternar = (nome) =>
+    const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbxJUtLvzgcAhhG7XpvraoBnuQjCf_RSfWUji6lFzQD81aQ8B5nB8l-4zfouQLsAbIhIvQ/exec";
+
+    const alternar = (chave, nome, familia) => {
+      const confirmado = !confirmados[chave];
       setConfirmados((prev) => {
         const novo = { ...prev };
-        if (novo[nome]) delete novo[nome]; else novo[nome] = true;
+        if (novo[chave]) delete novo[chave]; else novo[chave] = true;
         return novo;
       });
+      fetch(URL_PLANILHA, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ chave, nome, familia, confirmado }),
+      }).catch(() => {});
+    };
 
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${LOCAL.consulta}`;
     const wazeUrl = `https://waze.com/ul?q=${LOCAL.consulta}`;
@@ -289,7 +299,7 @@
                       <li key={chave}>
                         <span>{nome}</span>
                         <button type="button" className="botao" aria-pressed={ativo}
-                          onClick={() => alternar(chave)}>
+                          onClick={() => alternar(chave, nome, f.membros.map(nomeDe).join(", "))}>
                           {ativo ? "Confirmado ✓" : "Confirmar presença"}
                         </button>
                       </li>
